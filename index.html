@@ -1,0 +1,1614 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DUMPSTERFACIAL // EPK</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rubik+Glitch&family=Space+Grotesk:wght@400;500;700;900&family=Nosifer&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* =========================================================
+           DUMPSTERFACIAL EPK
+           ========================================================= */
+
+        :root {
+            --pink: #ff007f;
+            --green: #00ff66;
+            --yellow: #ffe600;
+            --orange: #ff5500;
+            --cyan: #00f0ff;
+            --red: #ff003c;
+
+            --black: #050507;
+            --dark: #0d0d11;
+            --card: #15151b;
+            --gray: #999;
+            --white: #f2f2f2;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(255,0,127,.10), transparent 30%),
+                radial-gradient(circle at 85% 70%, rgba(0,255,102,.08), transparent 30%),
+                #050507;
+
+            color: var(--white);
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+
+        /* =========================================================
+           CONTAINER
+           ========================================================= */
+
+        .container {
+            width: min(1100px, calc(100% - 30px));
+            margin: auto;
+        }
+
+
+        /* =========================================================
+           GLITCH TEXT
+           ========================================================= */
+
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .glitch::before {
+            color: var(--cyan);
+            transform: translate(3px, -2px);
+            clip-path: inset(0 0 55% 0);
+        }
+
+        .glitch::after {
+            color: var(--pink);
+            transform: translate(-3px, 2px);
+            clip-path: inset(55% 0 0 0);
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+           ========================================================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: rgba(0,0,0,.94);
+            border-bottom: 3px solid var(--pink);
+
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-inner {
+            min-height: 60px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-logo {
+            font-family: 'Rubik Glitch', sans-serif;
+            color: var(--yellow);
+            font-size: 1.3rem;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            font-size: .78rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: .2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--green);
+        }
+
+
+        /* =========================================================
+           CAUTION TAPE
+           ========================================================= */
+
+        .caution {
+            height: 18px;
+
+            background:
+                repeating-linear-gradient(
+                    -45deg,
+                    var(--yellow),
+                    var(--yellow) 18px,
+                    #000 18px,
+                    #000 36px
+                );
+
+            border-top: 2px solid #000;
+            border-bottom: 2px solid #000;
+        }
+
+
+        /* =========================================================
+           HERO
+           ========================================================= */
+
+        .hero {
+            min-height: 85vh;
+
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 40px;
+            align-items: center;
+
+            padding: 80px 0;
+        }
+
+        .hero-text {
+            position: relative;
+        }
+
+        .eyebrow {
+            display: inline-block;
+
+            background: var(--green);
+            color: #000;
+
+            padding: 5px 12px;
+
+            font-family: 'Permanent Marker', cursive;
+            font-size: .95rem;
+
+            transform: rotate(-2deg);
+
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            margin: 0;
+
+            font-family: 'Nosifer', cursive;
+            font-size: clamp(4rem, 10vw, 8.5rem);
+
+            line-height: .9;
+
+            color: var(--yellow);
+
+            text-shadow:
+                7px 7px 0 var(--pink),
+                -5px -5px 0 var(--cyan);
+        }
+
+        .hero-subtitle {
+            margin-top: 25px;
+
+            font-family: 'Permanent Marker', cursive;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+
+            color: var(--green);
+        }
+
+        .hero-description {
+            max-width: 650px;
+
+            margin-top: 20px;
+
+            color: #ccc;
+
+            font-size: 1.1rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+
+            padding: 14px 24px;
+
+            border: 3px solid #000;
+
+            font-family: 'Permanent Marker', cursive;
+
+            font-size: 1.05rem;
+
+            box-shadow: 5px 5px 0 #000;
+
+            transition: .15s;
+        }
+
+        .button:hover {
+            transform: translate(3px, 3px);
+            box-shadow: 2px 2px 0 #000;
+        }
+
+        .button-pink {
+            background: var(--pink);
+            color: #fff;
+        }
+
+        .button-green {
+            background: var(--green);
+            color: #000;
+        }
+
+        .button-yellow {
+            background: var(--yellow);
+            color: #000;
+        }
+
+
+        /* =========================================================
+           HERO IMAGE
+           ========================================================= */
+
+        .hero-image {
+            position: relative;
+
+            border: 5px solid var(--pink);
+
+            background: #000;
+
+            padding: 10px;
+
+            box-shadow:
+                12px 12px 0 var(--green),
+                -8px -8px 0 var(--cyan);
+
+            transform: rotate(1.5deg);
+        }
+
+        .hero-image img {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+
+            background:
+                linear-gradient(135deg, #15151b, #050507);
+        }
+
+        .image-placeholder {
+            min-height: 500px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            color: var(--gray);
+
+            font-family: 'Permanent Marker', cursive;
+        }
+
+
+        /* =========================================================
+           SECTION
+           ========================================================= */
+
+        section {
+            padding: 75px 0;
+        }
+
+        .section-title {
+            margin-bottom: 35px;
+
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+
+            font-family: 'Rubik Glitch', sans-serif;
+
+            font-size: clamp(2rem, 6vw, 4rem);
+
+            color: var(--yellow);
+
+            text-shadow: 4px 4px 0 var(--pink);
+        }
+
+        .section-number {
+            color: var(--green);
+            font-weight: 900;
+            font-size: .9rem;
+        }
+
+
+        /* =========================================================
+           BIO
+           ========================================================= */
+
+        .bio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card);
+
+            border: 3px solid var(--green);
+
+            padding: 30px;
+
+            box-shadow: 7px 7px 0 var(--orange);
+        }
+
+        .card p {
+            margin-top: 0;
+            color: #ddd;
+        }
+
+        .bio-highlight {
+            font-family: 'Permanent Marker', cursive;
+
+            font-size: 1.35rem;
+
+            color: var(--pink);
+        }
+
+
+        /* =========================================================
+           ARTIST FACTS
+           ========================================================= */
+
+        .facts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+
+            margin-top: 25px;
+        }
+
+        .fact {
+            padding: 22px;
+
+            background: #000;
+
+            border: 2px solid var(--yellow);
+        }
+
+        .fact strong {
+            display: block;
+
+            color: var(--green);
+
+            font-family: 'Permanent Marker', cursive;
+
+            font-size: 1.2rem;
+        }
+
+
+        /* =========================================================
+           SOUND
+           ========================================================= */
+
+        .sound-card {
+            border: 4px solid var(--pink);
+
+            background: #000;
+
+            padding: 35px;
+
+            box-shadow: 8px 8px 0 var(--cyan);
+        }
+
+        .sound-title {
+            font-family: 'Permanent Marker', cursive;
+
+            color: var(--green);
+
+            font-size: 2rem;
+        }
+
+        .genre-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            margin: 25px 0;
+        }
+
+        .genre {
+            padding: 8px 13px;
+
+            border: 2px solid var(--yellow);
+
+            color: var(--yellow);
+
+            font-weight: 700;
+
+            font-size: .85rem;
+
+            text-transform: uppercase;
+        }
+
+        .soundcloud {
+            margin-top: 25px;
+
+            width: 100%;
+            height: 166px;
+
+            border: 0;
+        }
+
+
+        /* =========================================================
+           VIDEO
+           ========================================================= */
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .video-card {
+            background: #000;
+
+            border: 3px solid var(--cyan);
+
+            overflow: hidden;
+        }
+
+        .video-card video,
+        .video-card iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+
+            border: 0;
+
+            display: block;
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-info h3 {
+            margin: 0;
+
+            color: var(--yellow);
+
+            font-family: 'Permanent Marker', cursive;
+        }
+
+
+        /* =========================================================
+           PHOTO GALLERY
+           ========================================================= */
+
+        .gallery {
+            columns: 3 250px;
+            column-gap: 15px;
+        }
+
+        .gallery-item {
+            break-inside: avoid;
+
+            margin-bottom: 15px;
+
+            border: 3px solid #000;
+
+            background: var(--card);
+
+            box-shadow: 4px 4px 0 var(--pink);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+        }
+
+        .photo-placeholder {
+            aspect-ratio: 1 / 1.2;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            padding: 20px;
+
+            color: #777;
+
+            font-family: 'Permanent Marker', cursive;
+        }
+
+
+        /* =========================================================
+           EVENTS
+           ========================================================= */
+
+        .event-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .event {
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 20px;
+            align-items: center;
+
+            padding: 20px;
+
+            background: var(--card);
+
+            border-left: 6px solid var(--pink);
+        }
+
+        .event-date {
+            color: var(--yellow);
+
+            font-family: 'Permanent Marker', cursive;
+        }
+
+        .event-name {
+            font-weight: 900;
+        }
+
+        .event-location {
+            color: #999;
+
+            font-size: .9rem;
+        }
+
+        .event-status {
+            background: var(--green);
+            color: #000;
+
+            padding: 5px 10px;
+
+            font-size: .7rem;
+            font-weight: 900;
+        }
+
+
+        /* =========================================================
+           PRESS
+           ========================================================= */
+
+        .press-card {
+            background: #000;
+
+            border: 3px solid var(--yellow);
+
+            padding: 30px;
+
+            box-shadow: 8px 8px 0 var(--pink);
+        }
+
+        .press-source {
+            color: var(--green);
+
+            font-weight: 900;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+        }
+
+        .press-title {
+            font-family: 'Permanent Marker', cursive;
+
+            color: var(--yellow);
+
+            font-size: 1.8rem;
+
+            margin: 10px 0;
+        }
+
+        .press-description {
+            color: #bbb;
+        }
+
+        .press-button {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 10px 18px;
+
+            background: var(--pink);
+
+            color: white;
+
+            font-weight: 900;
+
+            border: 2px solid #000;
+        }
+
+
+        /* =========================================================
+           LINKS
+           ========================================================= */
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .link-button {
+            padding: 20px;
+
+            border: 3px solid var(--green);
+
+            background: #000;
+
+            text-align: center;
+
+            font-family: 'Permanent Marker', cursive;
+
+            color: var(--yellow);
+
+            transition: .2s;
+        }
+
+        .link-button:hover {
+            background: var(--green);
+            color: #000;
+        }
+
+
+        /* =========================================================
+           BOOKING
+           ========================================================= */
+
+        .booking {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,0,127,.12),
+                    rgba(0,255,102,.08)
+                );
+
+            border-top: 4px solid var(--pink);
+            border-bottom: 4px solid var(--green);
+        }
+
+        .booking-box {
+            background: #000;
+
+            border: 4px solid var(--yellow);
+
+            padding: 40px;
+
+            box-shadow: 10px 10px 0 var(--orange);
+        }
+
+        .booking-box h3 {
+            margin-top: 0;
+
+            font-family: 'Rubik Glitch', sans-serif;
+
+            color: var(--pink);
+
+            font-size: 2.5rem;
+        }
+
+        .booking-box p {
+            color: #ccc;
+        }
+
+        .booking-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+
+            margin: 25px 0;
+        }
+
+        .booking-list div {
+            padding: 12px;
+
+            border-left: 3px solid var(--green);
+
+            background: var(--card);
+        }
+
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+
+        footer {
+            padding: 50px 0;
+
+            text-align: center;
+
+            background: #000;
+
+            border-top: 3px solid var(--cyan);
+        }
+
+        footer .footer-name {
+            font-family: 'Nosifer', cursive;
+
+            color: var(--pink);
+
+            font-size: 2.5rem;
+        }
+
+        footer p {
+            color: #666;
+        }
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 800px) {
+
+            .nav-inner {
+                padding: 10px 0;
+
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                justify-content: flex-start;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+
+                padding: 50px 0;
+            }
+
+            .hero-image {
+                max-width: 600px;
+                margin: auto;
+            }
+
+            .bio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .facts {
+                grid-template-columns: 1fr;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .links-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .event {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .booking-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            body {
+                font-size: .95rem;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            section {
+                padding: 50px 0;
+            }
+
+            .card,
+            .booking-box,
+            .sound-card,
+            .press-card {
+                padding: 22px;
+            }
+
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVIGATION
+     ========================================================= -->
+
+<nav>
+    <div class="container nav-inner">
+
+        <div class="nav-logo">
+            DUMPSTERFACIAL // EPK
+        </div>
+
+        <div class="nav-links">
+            <a href="#about">ABOUT</a>
+            <a href="#sound">SOUND</a>
+            <a href="#video">VIDEO</a>
+            <a href="#photos">PHOTOS</a>
+            <a href="#shows">SHOWS</a>
+            <a href="#press">PRESS</a>
+            <a href="#booking">BOOK</a>
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+
+<header class="container hero">
+
+    <div class="hero-text">
+
+        <div class="eyebrow">
+            OKC // RED40CORE // TRA$H CULT
+        </div>
+
+        <h1 class="glitch"
+            data-text="DUMPSTERFACIAL">
+            DUMPSTERFACIAL
+        </h1>
+
+        <div class="hero-subtitle">
+            MULTIGENRE ELECTRONIC // DJ // PERFORMANCE
+        </div>
+
+        <p class="hero-description">
+            Oklahoma City-based artist and DJ operating somewhere
+            between electronic music, performance art, drag, street
+            culture, rave culture, punk, glitch and complete fucking chaos.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a class="button button-pink" href="#booking">
+                GET A DUMPSTER FACIAL
+            </a>
+
+            <a class="button button-green" href="#sound">
+                HEAR THE DAMAGE
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-image">
+
+        <!--
+            REPLACE THIS WITH HER MAIN PRESS PHOTO
+
+            Example:
+
+            <img src="images/hero.jpg"
+                 alt="DumpsterFacial">
+        -->
+
+        <div class="image-placeholder">
+            DROP<br>
+            HERO PHOTO<br>
+            HERE
+        </div>
+
+    </div>
+
+</header>
+
+
+<div class="caution"></div>
+
+
+<!-- =========================================================
+     ABOUT
+     ========================================================= -->
+
+<section id="about">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-number">01 //</span>
+
+            <h2>WHO THE FUCK?</h2>
+
+        </div>
+
+
+        <div class="bio-grid">
+
+            <div class="card">
+
+                <p class="bio-highlight">
+                    "Artist from OKC just clowning around ~ making art
+                    & eating the leftovers outta ur fridge."
+                </p>
+
+                <p>
+                    DumpsterFacial is an Oklahoma City-based multidisciplinary
+                    artist and DJ whose work blurs the line between music,
+                    performance, drag, fashion, visual art and absolute
+                    fucking nonsense.
+                </p>
+
+                <p>
+                    Her visual world pulls from trailer-park culture,
+                    urban street life, rave aesthetics, punk, glitch art,
+                    clown imagery and DIY culture.
+                </p>
+
+                <p>
+                    Under the broader TRA$H CULT / RED40CORE universe,
+                    music and visual identity become one giant,
+                    deliberately dysfunctional collage.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <p>
+                    DumpsterFacial's work has historically centered around
+                    experimental electronic music and performance, including
+                    her 2022 debut EP <strong>Bimbo Affirmations</strong>.
+                </p>
+
+                <p>
+                    Her current DJ identity leans heavily into multigenre
+                    electronic music, EDM, club sounds, industrial textures,
+                    punk energy and whatever the fuck sounds good at
+                    maximum volume.
+                </p>
+
+                <p>
+                    The goal isn't to fit neatly into a genre.
+                </p>
+
+                <p class="bio-highlight">
+                    THE GOAL IS TO MAKE THE ROOM WEIRDER.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="facts">
+
+            <div class="fact">
+                <strong>BASED IN</strong>
+                Oklahoma City, Oklahoma
+            </div>
+
+            <div class="fact">
+                <strong>PROJECT</strong>
+                DumpsterFacial
+            </div>
+
+            <div class="fact">
+                <strong>FORMAT</strong>
+                DJ / Electronic / Performance
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="caution"></div>
+
+
+<!-- =========================================================
+     SOUND
+     ========================================================= -->
+
+<section id="sound">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-number">02 //</span>
+
+            <h2>THE SOUND</h2>
+
+        </div>
+
+
+        <div class="sound-card">
+
+            <div class="sound-title">
+                MULTIGENRE BRAIN ROT
+            </div>
+
+            <p>
+                DumpsterFacial doesn't stay in one lane.
+                Expect electronic music with an EDM-leaning center of gravity,
+                mixed with darker, stranger and heavier influences.
+            </p>
+
+
+            <div class="genre-list">
+
+                <span class="genre">EDM</span>
+                <span class="genre">ELECTRONIC</span>
+                <span class="genre">INDUSTRIAL</span>
+                <span class="genre">DARKWAVE</span>
+                <span class="genre">CLUB</span>
+                <span class="genre">PUNK</span>
+                <span class="genre">EXPERIMENTAL</span>
+                <span class="genre">BASS</span>
+
+            </div>
+
+
+            <!--
+                SOUNDCLOUD EMBED
+
+                Replace this iframe with the actual SoundCloud
+                embed code for whichever track/mix you want featured.
+
+                Her SoundCloud:
+                https://soundcloud.com/jadea-sanchez
+            -->
+
+            <iframe
+                class="soundcloud"
+                scrolling="no"
+                frameborder="no"
+                allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/jadea-sanchez">
+            </iframe>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     VIDEO
+     ========================================================= -->
+
+<section id="video">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-number">03 //</span>
+
+            <h2>WATCH THE MESS</h2>
+
+        </div>
+
+
+        <div class="video-grid">
+
+
+            <div class="video-card">
+
+                <!--
+                    FUTURE:
+                    Replace with uploaded video or YouTube embed.
+                -->
+
+                <div class="photo-placeholder">
+                    LIVE PERFORMANCE<br>
+                    VIDEO
+                </div>
+
+                <div class="video-info">
+
+                    <h3>LIVE // DUMPSTERFACIAL</h3>
+
+                    <p>
+                        Drop live performance footage here.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="video-card">
+
+                <div class="photo-placeholder">
+                    MUSIC VIDEO<br>
+                    / VISUAL
+                </div>
+
+                <div class="video-info">
+
+                    <h3>VISUAL DAMAGE</h3>
+
+                    <p>
+                        Music video, visual art or performance footage.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="caution"></div>
+
+
+<!-- =========================================================
+     PHOTOS
+     ========================================================= -->
+
+<section id="photos">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-number">04 //</span>
+
+            <h2>PHOTO EVIDENCE</h2>
+
+        </div>
+
+
+        <div class="gallery">
+
+
+            <!--
+                FUTURE PHONE UPLOAD SYSTEM:
+
+                These placeholder blocks will eventually be populated
+                automatically from the media database.
+            -->
+
+
+            <div class="gallery-item">
+                <div class="photo-placeholder">
+                    PRESS PHOTO
+                </div>
+            </div>
+
+
+            <div class="gallery-item">
+                <div class="photo-placeholder">
+                    LIVE PHOTO
+                </div>
+            </div>
+
+
+            <div class="gallery-item">
+                <div class="photo-placeholder">
+                    PORTRAIT
+                </div>
+            </div>
+
+
+            <div class="gallery-item">
+                <div class="photo-placeholder">
+                    PERFORMANCE
+                </div>
+            </div>
+
+
+            <div class="gallery-item">
+                <div class="photo-placeholder">
+                    CHAOS
+                </div>
+            </div>
+
+
+            <div class="gallery-item">
+                <div class="photo-placeholder">
+                    MORE CHAOS
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SHOWS
+     ========================================================= -->
+
+<section id="shows">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-number">05 //</span>
+
+            <h2>WHERE'S THE DAMAGE?</h2>
+
+        </div>
+
+
+        <div class="event-list">
+
+
+            <!--
+                IMPORTANT:
+                The old Gemini site contained placeholder events.
+                Those are intentionally NOT being presented as real events here.
+
+                Add verified events below.
+            -->
+
+
+            <div class="event">
+
+                <div class="event-date">
+                    UPCOMING
+                </div>
+
+                <div>
+
+                    <div class="event-name">
+                        CEDAR FALLS DATA // EVENT
+                    </div>
+
+                    <div class="event-location">
+                        See official event listing for current details.
+                    </div>
+
+                </div>
+
+                <div class="event-status">
+                    UPCOMING
+                </div>
+
+            </div>
+
+
+            <!--
+                Example format for future shows:
+
+                <div class="event">
+                    <div class="event-date">
+                        SEP 12<br>2026
+                    </div>
+
+                    <div>
+                        <div class="event-name">
+                            EVENT NAME
+                        </div>
+
+                        <div class="event-location">
+                            VENUE // OKC, OK
+                        </div>
+                    </div>
+
+                    <div class="event-status">
+                        UPCOMING
+                    </div>
+                </div>
+            -->
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="caution"></div>
+
+
+<!-- =========================================================
+     PRESS
+     ========================================================= -->
+
+<section id="press">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-number">06 //</span>
+
+            <h2>PRESS</h2>
+
+        </div>
+
+
+        <div class="press-card">
+
+            <div class="press-source">
+                MAKE OKLAHOMA WEIRDER
+            </div>
+
+            <div class="press-title">
+                "I Just Really Want to Disgust People":
+                An Interview with DumpsterFacial
+            </div>
+
+            <p class="press-description">
+
+                A 2022 interview discussing DumpsterFacial's creative work,
+                performance, electronic music and debut EP,
+                <strong>Bimbo Affirmations</strong>.
+
+            </p>
+
+
+            <a
+                class="press-button"
+                href="https://www.makeoklahomaweirder.com/2022/05/04/i-just-really-want-to-disgust-people-an-interview-with-dumpsterfacial/"
+                target="_blank"
+                rel="noopener">
+
+                READ THE INTERVIEW →
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     LINKS
+     ========================================================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-number">07 //</span>
+
+            <h2>THE INTERNET</h2>
+
+        </div>
+
+
+        <div class="links-grid">
+
+
+            <a
+                class="link-button"
+                href="https://soundcloud.com/jadea-sanchez"
+                target="_blank"
+                rel="noopener">
+
+                SOUNDCLOUD
+
+            </a>
+
+
+            <a
+                class="link-button"
+                href="https://www.depop.com/trashcultprod_/"
+                target="_blank"
+                rel="noopener">
+
+                DEPOP / TRA$H CULT
+
+            </a>
+
+
+            <a
+                class="link-button"
+                href="https://www.makeoklahomaweirder.com/2022/05/04/i-just-really-want-to-disgust-people-an-interview-with-dumpsterfacial/"
+                target="_blank"
+                rel="noopener">
+
+                PRESS
+
+            </a>
+
+
+            <!--
+                Add Instagram / TikTok / YouTube here when available.
+            -->
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     BOOKING
+     ========================================================= -->
+
+<section id="booking" class="booking">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-number">08 //</span>
+
+            <h2>BOOK HER</h2>
+
+        </div>
+
+
+        <div class="booking-box">
+
+            <h3>
+                GET A DUMPSTER FACIAL
+            </h3>
+
+            <p>
+                Looking for a DJ who isn't afraid to make the room weird?
+                DumpsterFacial is available for club nights, DIY shows,
+                warehouse parties, underground events, fashion events,
+                performance art and other appropriately questionable
+                decisions.
+            </p>
+
+
+            <div class="booking-list">
+
+                <div>
+                    <strong>DJ SETS</strong><br>
+                    Multigenre electronic / EDM / experimental
+                </div>
+
+                <div>
+                    <strong>DIY EVENTS</strong><br>
+                    Punk / underground / community events
+                </div>
+
+                <div>
+                    <strong>CLUB NIGHTS</strong><br>
+                    High-energy electronic sets
+                </div>
+
+                <div>
+                    <strong>ART / FASHION</strong><br>
+                    Performance & creative events
+                </div>
+
+            </div>
+
+
+            <!--
+                Replace this email address with the preferred
+                booking email once confirmed.
+            -->
+
+            <a
+                class="button button-pink"
+                href="mailto:Sanchezjadea@gmail.com">
+
+                BOOK DUMPSTERFACIAL
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="footer-name">
+            DUMPSTERFACIAL
+        </div>
+
+        <p>
+            OKC // RED40CORE // TRA$H CULT
+        </p>
+
+        <p>
+            © 2026 DumpsterFacial
+        </p>
+
+    </div>
+
+</footer>
+
+
+</body>
+</html>
+```
