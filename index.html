@@ -886,6 +886,15 @@
         }
 
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <style>
+      .instagram-panel{background:#000;border:4px solid var(--pink);padding:30px;box-shadow:8px 8px 0 var(--green)}
+      .instagram-panel p{color:#bbb;max-width:720px}
+      .instagram-handle{font-family:'Permanent Marker',cursive;color:var(--green);font-size:1.35rem}
+      .event-ticket{display:inline-block;background:var(--yellow);color:#000;padding:10px 14px;font-weight:900;border:2px solid #000}
+      .event-note{padding:25px;border:2px dashed #444;color:#888;text-align:center}
+    </style>
 </head>
 
 
@@ -909,6 +918,7 @@
             <a href="#video">VIDEO</a>
             <a href="#photos">PHOTOS</a>
             <a href="#shows">SHOWS</a>
+            <a href="#instagram">INSTAGRAM</a>
             <a href="#press">PRESS</a>
             <a href="#booking">BOOK</a>
         </div>
@@ -1295,38 +1305,26 @@
         </div>
 
 
-        <div class="event-list">
-
-            <div class="event">
-
-                <div class="event-date">
-                    UPCOMING
-                </div>
-
-                <div>
-
-                    <div class="event-name">
-                        CEDAR FALLS DATA // EVENT
-                    </div>
-
-                    <div class="event-location">
-                        See official event listing for current details.
-                    </div>
-
-                </div>
-
-                <div class="event-status">
-                    UPCOMING
-                </div>
-
-            </div>
-
+        <div id="public-events" class="event-list">
+            <div class="event-note">CHECKING THE DUMPSTER FOR UPCOMING SIGHTINGS...</div>
         </div>
-
     </div>
-
 </section>
 
+<section id="instagram">
+    <div class="container">
+        <div class="section-title">
+            <span class="section-number">06 //</span>
+            <h2>TRANSMISSIONS FROM THE DUMPSTER</h2>
+        </div>
+        <div class="instagram-panel">
+            <div class="instagram-handle">@dumpsterfacial_</div>
+            <p>Latest sightings, looks, flyers, trash and internet evidence.</p>
+            <div class="elfsight-app-a72f3b38-bdf2-4728-9282-c4ef96ef9f44" data-elfsight-app-lazy></div>
+            <a class="button button-pink" style="margin-top:24px;" href="https://www.instagram.com/dumpsterfacial_/" target="_blank" rel="noopener noreferrer">STALK @DUMPSTERFACIAL_ ↗</a>
+        </div>
+    </div>
+</section>
 
 <div class="caution"></div>
 
@@ -1341,7 +1339,7 @@
 
         <div class="section-title">
 
-            <span class="section-number">06 //</span>
+            <span class="section-number">07 //</span>
 
             <h2>PRESS</h2>
 
@@ -1395,7 +1393,7 @@
 
         <div class="section-title">
 
-            <span class="section-number">07 //</span>
+            <span class="section-number">08 //</span>
 
             <h2>THE INTERNET</h2>
 
@@ -1455,7 +1453,7 @@
 
         <div class="section-title">
 
-            <span class="section-number">08 //</span>
+            <span class="section-number">09 //</span>
 
             <h2>BOOK HER</h2>
 
@@ -1542,5 +1540,24 @@
 </footer>
 
 
+<script>
+const SUPABASE_URL='https://ighohowuvdhpsicazcvx.supabase.co';
+const SUPABASE_KEY='sb_publishable_U2uq7jruC6daV4ONUmjOsg_njW-dN-i';
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+const goodUrl=u=>{try{const x=new URL(u);return ['http:','https:'].includes(x.protocol)?x.href:''}catch{return''}};
+function prettyDate(s){return new Date(s+'T12:00:00').toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'})}
+function prettyTime(s){if(!s)return'';let [h,m]=s.split(':');h=Number(h);return (h%12||12)+':'+m+' '+(h>=12?'PM':'AM')}
+async function loadPublicEvents(){
+ const el=document.getElementById('public-events');
+ const today=new Date(); const y=today.getFullYear(),m=String(today.getMonth()+1).padStart(2,'0'),d=String(today.getDate()).padStart(2,'0');
+ const {data,error}=await db.from('events').select('*').gte('event_date',`${y}-${m}-${d}`).order('event_date',{ascending:true});
+ if(error){el.innerHTML='<div class="event-note">SHOW DATA TEMPORARILY UNAVAILABLE.</div>';return}
+ if(!data?.length){el.innerHTML='<div class="event-note">NO UPCOMING SIGHTINGS POSTED YET.</div>';return}
+ el.innerHTML=data.map(e=>{const ticket=goodUrl(e.ticket_url);const details=[e.event_time?prettyTime(e.event_time):'',e.venue,e.location].filter(Boolean).map(esc).join(' • ');
+ return `<article class="event"><div class="event-date">${esc(prettyDate(e.event_date))}</div><div><div class="event-name">${esc(e.title)}</div>${details?'<div class="event-location">'+details+'</div>':''}</div><div>${ticket?'<a class="event-ticket" target="_blank" rel="noopener noreferrer" href="'+esc(ticket)+'">GET TICKETS ↗</a>':'<span class="event-status">UPCOMING</span>'}</div></article>`}).join('');
+}
+loadPublicEvents();
+</script>
 </body>
 </html>
