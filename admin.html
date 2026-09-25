@@ -1,1 +1,2193 @@
-<!DOCT
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DUMPSTERFACIAL // CONTROL ROOM</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rubik+Glitch&family=Space+Grotesk:wght@400;500;700;900&family=Nosifer&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --pink: #ff007f;
+            --green: #00ff66;
+            --yellow: #ffe600;
+            --orange: #ff5500;
+            --cyan: #00f0ff;
+            --red: #ff003c;
+            --black: #050507;
+            --dark: #0d0d11;
+            --card: #15151b;
+            --gray: #999;
+            --white: #f2f2f2;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(255,0,127,.10), transparent 30%),
+                radial-gradient(circle at 85% 70%, rgba(0,255,102,.08), transparent 30%),
+                var(--black);
+            color: var(--white);
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1000px, calc(100% - 30px));
+            margin: auto;
+        }
+
+        /* HEADER */
+
+        header {
+            border-bottom: 4px solid var(--pink);
+            background: #000;
+        }
+
+        .header-inner {
+            min-height: 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-family: 'Rubik Glitch', sans-serif;
+            color: var(--yellow);
+            font-size: 1.5rem;
+        }
+
+        .epk-link {
+            color: var(--green);
+            font-weight: 900;
+            font-size: .85rem;
+        }
+
+        /* LOGIN */
+
+        #login-screen {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 450px;
+            background: var(--card);
+            border: 4px solid var(--pink);
+            padding: 35px;
+            box-shadow: 10px 10px 0 var(--green);
+        }
+
+        .login-box h1 {
+            margin-top: 0;
+            font-family: 'Nosifer', cursive;
+            color: var(--yellow);
+            font-size: clamp(2rem, 8vw, 4rem);
+            line-height: 1;
+        }
+
+        .login-box p {
+            color: #aaa;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 7px;
+            color: var(--green);
+            font-family: 'Permanent Marker', cursive;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 14px;
+            background: #000;
+            color: white;
+            border: 2px solid var(--yellow);
+            font-family: inherit;
+            font-size: 1rem;
+            border-radius: 0;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        input[type="file"] {
+            margin-top: 15px;
+            border: 2px dashed var(--cyan);
+        }
+
+        button {
+            cursor: pointer;
+            border: 3px solid #000;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1rem;
+            padding: 13px 20px;
+            box-shadow: 5px 5px 0 #000;
+            transition: .15s;
+        }
+
+        button:hover {
+            transform: translate(3px, 3px);
+            box-shadow: 2px 2px 0 #000;
+        }
+
+        button:disabled {
+            opacity: .55;
+            cursor: wait;
+        }
+
+        .pink-button {
+            background: var(--pink);
+            color: white;
+        }
+
+        .green-button {
+            background: var(--green);
+            color: #000;
+        }
+
+        .yellow-button {
+            background: var(--yellow);
+            color: #000;
+        }
+
+        .red-button {
+            background: var(--red);
+            color: #fff;
+        }
+
+        .full-button {
+            width: 100%;
+            margin-top: 25px;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 12px;
+            display: none;
+            border: 2px solid var(--red);
+            background: rgba(255,0,60,.1);
+            color: #fff;
+        }
+
+        .message.success {
+            border-color: var(--green);
+            background: rgba(0,255,102,.08);
+        }
+
+        /* ADMIN */
+
+        #admin-screen {
+            display: none;
+            padding: 50px 0;
+        }
+
+        .admin-title {
+            margin-bottom: 40px;
+        }
+
+        .admin-title h1 {
+            margin: 0;
+            font-family: 'Nosifer', cursive;
+            color: var(--yellow);
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            line-height: .95;
+            text-shadow:
+                5px 5px 0 var(--pink),
+                -3px -3px 0 var(--cyan);
+        }
+
+        .admin-title p {
+            color: var(--green);
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.2rem;
+        }
+
+        .admin-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 45px;
+        }
+
+        .admin-nav a,
+        .admin-nav button {
+            padding: 10px 14px;
+            background: #000;
+            color: var(--yellow);
+            border: 2px solid var(--pink);
+            box-shadow: 4px 4px 0 var(--green);
+            font-family: 'Permanent Marker', cursive;
+            font-size: .85rem;
+        }
+
+        .admin-nav button {
+            margin-left: auto;
+        }
+
+        .admin-section {
+            scroll-margin-top: 20px;
+            margin-bottom: 65px;
+        }
+
+        /* UPLOADS */
+
+        .upload-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .upload-card {
+            background: var(--card);
+            padding: 25px;
+            border: 3px solid var(--green);
+            box-shadow: 7px 7px 0 var(--orange);
+        }
+
+        .upload-card h2 {
+            margin-top: 0;
+            color: var(--yellow);
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.8rem;
+        }
+
+        .upload-card p {
+            color: #aaa;
+        }
+
+        .upload-button {
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        /* PROGRESS */
+
+        .progress-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 12px;
+            width: 0%;
+            background: var(--green);
+            transition: width .2s;
+        }
+
+        .progress-track {
+            background: #000;
+            border: 2px solid var(--green);
+            height: 16px;
+        }
+
+        /* HEADINGS */
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            color: var(--yellow);
+            font-family: 'Rubik Glitch', sans-serif;
+            font-size: clamp(2rem, 6vw, 2.8rem);
+        }
+
+        /* MEDIA */
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .media-item {
+            position: relative;
+            background: #000;
+            border: 3px solid var(--pink);
+            overflow: hidden;
+        }
+
+        .media-item img,
+        .media-item video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+        }
+
+        .media-name {
+            padding: 8px;
+            font-size: .7rem;
+            color: #aaa;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .delete-button {
+            width: 100%;
+            padding: 8px;
+            border: 0;
+            box-shadow: none;
+            background: var(--red);
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 900;
+            font-size: .75rem;
+        }
+
+        .delete-button:hover {
+            transform: none;
+            box-shadow: none;
+            background: #ff174f;
+        }
+
+        .empty {
+            padding: 40px;
+            text-align: center;
+            border: 2px dashed #444;
+            color: #666;
+        }
+
+        /* EVENTS */
+
+        .event-form-card {
+            border-color: var(--pink);
+            box-shadow: 7px 7px 0 var(--cyan);
+            margin-bottom: 35px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 20px;
+        }
+
+        .form-full {
+            grid-column: 1 / -1;
+        }
+
+        .events-list {
+            display: grid;
+            gap: 18px;
+        }
+
+        .event-card {
+            background: var(--card);
+            border: 3px solid var(--pink);
+            padding: 22px;
+            box-shadow: 7px 7px 0 var(--green);
+        }
+
+        .event-card.past {
+            border-color: #555;
+            box-shadow: 7px 7px 0 #333;
+            opacity: .8;
+        }
+
+        .event-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .event-date {
+            color: var(--cyan);
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .event-card h3 {
+            margin: 0;
+            color: var(--yellow);
+            font-family: 'Rubik Glitch', sans-serif;
+            font-size: 1.7rem;
+        }
+
+        .event-details {
+            margin-top: 10px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .event-description {
+            color: #999;
+            margin-top: 14px;
+            white-space: pre-wrap;
+        }
+
+        .event-flyer {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            margin-top: 18px;
+            border: 2px solid var(--yellow);
+        }
+
+        .event-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .event-actions button,
+        .event-actions a {
+            display: inline-block;
+            padding: 10px 14px;
+            border: 2px solid #000;
+            font-family: 'Permanent Marker', cursive;
+            font-size: .85rem;
+        }
+
+        .ticket-link {
+            background: var(--yellow);
+            color: #000;
+        }
+
+        .edit-event {
+            background: var(--green);
+            color: #000;
+        }
+
+        .delete-event {
+            background: var(--red);
+            color: #fff;
+        }
+
+        .editing-notice {
+            display: none;
+            padding: 12px;
+            margin-bottom: 20px;
+            background: rgba(0,240,255,.08);
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            font-weight: 900;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+            .header-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 15px 0;
+            }
+
+            .upload-grid,
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-full {
+                grid-column: auto;
+            }
+
+            .login-box {
+                padding: 25px;
+                box-shadow: 6px 6px 0 var(--green);
+            }
+
+            .media-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            #admin-screen {
+                padding: 35px 0;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .event-top {
+                flex-direction: column;
+            }
+
+            .admin-nav button {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container header-inner">
+        <div class="logo">
+            DUMPSTERFACIAL // CONTROL ROOM
+        </div>
+
+        <a class="epk-link" href="index.html" target="_blank">
+            ← VIEW PUBLIC EPK
+        </a>
+    </div>
+</header>
+
+
+<!-- LOGIN -->
+
+<div id="login-screen">
+    <div class="container">
+        <div class="login-box">
+
+            <h1>CONTROL<br>ROOM</h1>
+
+            <p>DUMPSTERFACIAL // CONTROL ROOM</p>
+
+            <form id="login-form">
+
+                <label for="email">EMAIL</label>
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="your@email.com"
+                    autocomplete="email"
+                    required>
+
+                <label for="password">PASSWORD</label>
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="password"
+                    autocomplete="current-password"
+                    required>
+
+                <button class="pink-button full-button" type="submit">
+                    ENTER THE TRASH
+                </button>
+
+            </form>
+
+            <div id="login-message" class="message"></div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- ADMIN -->
+
+<main id="admin-screen">
+    <div class="container">
+
+        <div class="admin-title">
+            <h1>
+                EPK<br>
+                CONTROL
+            </h1>
+
+            <p>
+                upload the evidence. announce the chaos.
+            </p>
+        </div>
+
+        <nav class="admin-nav">
+            <a href="#events-manager">SHOWS + SIGHTINGS</a>
+            <a href="#media-manager">EVIDENCE LOCKER</a>
+            <button id="logout-button" type="button">LOG OUT</button>
+        </nav>
+
+
+        <!-- =====================================================
+             EVENTS
+             ===================================================== -->
+
+        <section id="events-manager" class="admin-section">
+
+            <div class="section-heading">
+                <h2>SHOWS + SIGHTINGS</h2>
+            </div>
+
+            <div class="upload-card event-form-card">
+
+                <h2 id="event-form-title">🗓 ADD EVENT</h2>
+
+                <p>
+                    Shows, DJ sets, parties, pop-ups and other appearances.
+                </p>
+
+                <div id="editing-notice" class="editing-notice">
+                    EDITING EXISTING EVENT
+                </div>
+
+                <form id="event-form">
+
+                    <input type="hidden" id="event-id">
+
+                    <div class="form-grid">
+
+                        <div class="form-full">
+                            <label for="event-title">
+                                EVENT / SHOW NAME *
+                            </label>
+
+                            <input
+                                id="event-title"
+                                type="text"
+                                placeholder="DUMPSTERFACIAL @ ..."
+                                required>
+                        </div>
+
+
+                        <div>
+                            <label for="event-date">DATE *</label>
+
+                            <input
+                                id="event-date"
+                                type="date"
+                                required>
+                        </div>
+
+
+                        <div>
+                            <label for="event-time">TIME</label>
+
+                            <input
+                                id="event-time"
+                                type="time">
+                        </div>
+
+
+                        <div>
+                            <label for="event-venue">VENUE</label>
+
+                            <input
+                                id="event-venue"
+                                type="text"
+                                placeholder="Venue name">
+                        </div>
+
+
+                        <div>
+                            <label for="event-location">
+                                CITY / LOCATION
+                            </label>
+
+                            <input
+                                id="event-location"
+                                type="text"
+                                placeholder="Oklahoma City, OK">
+                        </div>
+
+
+                        <div class="form-full">
+                            <label for="event-ticket-url">
+                                TICKET LINK
+                            </label>
+
+                            <input
+                                id="event-ticket-url"
+                                type="url"
+                                placeholder="https://...">
+                        </div>
+
+
+                        <div class="form-full">
+<label for="event-flyer-file">FLYER IMAGE</label>
+<input id="event-flyer-file" type="file" accept="image/*">
+<input id="event-flyer-url" type="hidden">
+<p style="font-size:.85rem;color:#999;">Upload the flyer straight from your phone.</p>
+<div id="flyer-preview-wrap" style="display:none;margin-top:12px;"><img id="flyer-preview" alt="Event flyer preview" style="max-width:260px;border:2px solid var(--yellow);"><button id="remove-flyer" type="button" class="red-button" style="display:block;margin-top:10px;">REMOVE FLYER</button></div>
+</div>
+
+
+                        <div class="form-full">
+                            <label for="event-description">
+                                DESCRIPTION
+                            </label>
+
+                            <textarea
+                                id="event-description"
+                                placeholder="Anything people should know..."></textarea>
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        id="event-save-button"
+                        class="green-button full-button">
+
+                        ADD EVENT
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="event-cancel-button"
+                        class="yellow-button full-button"
+                        style="display:none;">
+
+                        CANCEL EDIT
+
+                    </button>
+
+                </form>
+
+                <div id="event-message" class="message"></div>
+
+            </div>
+
+
+            <div class="section-heading">
+                <h2>UPCOMING EVENTS</h2>
+            </div>
+
+            <div id="upcoming-events" class="events-list">
+                <div class="empty">Loading events...</div>
+            </div>
+
+
+            <div class="section-heading" style="margin-top:50px;">
+                <h2>PAST EVENTS</h2>
+            </div>
+
+            <div id="past-events" class="events-list">
+                <div class="empty">Loading past events...</div>
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             MEDIA
+             ===================================================== -->
+
+        <section id="media-manager" class="admin-section">
+
+            <div class="section-heading">
+                <h2>EVIDENCE LOCKER</h2>
+            </div>
+
+            <div class="upload-grid">
+
+                <div class="upload-card">
+
+                    <h2>📸 PHOTOS</h2>
+
+                    <p>
+                        Select one or multiple photos from your phone.
+                    </p>
+
+                    <input
+                        id="photo-input"
+                        type="file"
+                        accept="image/*"
+                        multiple>
+
+                    <button
+                        id="photo-upload"
+                        class="green-button upload-button"
+                        type="button">
+
+                        UPLOAD PHOTOS
+
+                    </button>
+
+                    <div
+                        id="photo-progress"
+                        class="progress-container">
+
+                        <div class="progress-track">
+                            <div
+                                id="photo-progress-bar"
+                                class="progress-bar">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="upload-card">
+
+                    <h2>🎥 VIDEOS</h2>
+
+                    <p>
+                        Select one or multiple videos from your phone.
+                    </p>
+
+                    <input
+                        id="video-input"
+                        type="file"
+                        accept="video/*"
+                        multiple>
+
+                    <button
+                        id="video-upload"
+                        class="pink-button upload-button"
+                        type="button">
+
+                        UPLOAD VIDEOS
+
+                    </button>
+
+                    <div
+                        id="video-progress"
+                        class="progress-container">
+
+                        <div class="progress-track">
+                            <div
+                                id="video-progress-bar"
+                                class="progress-bar">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="status-message" class="message"></div>
+
+
+            <div class="section-heading" style="margin-top:45px;">
+
+                <h2>MEDIA LIBRARY</h2>
+
+                <button
+                    id="refresh-button"
+                    class="yellow-button"
+                    type="button">
+
+                    REFRESH
+
+                </button>
+
+            </div>
+
+
+            <div id="media-grid" class="media-grid">
+                <div class="empty">Loading media...</div>
+            </div>
+
+        </section>
+
+    </div>
+</main>
+
+
+<script>
+    /* ============================================================
+       SUPABASE
+       ============================================================ */
+
+    const SUPABASE_URL =
+        'https://ighohowuvdhpsicazcvx.supabase.co';
+
+    const SUPABASE_KEY =
+        'sb_publishable_U2uq7jruC6daV4ONUmjOsg_njW-dN-i';
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+    /* ============================================================
+       ELEMENTS
+       ============================================================ */
+
+    const loginScreen =
+        document.getElementById('login-screen');
+
+    const adminScreen =
+        document.getElementById('admin-screen');
+
+    const loginForm =
+        document.getElementById('login-form');
+
+    const loginMessage =
+        document.getElementById('login-message');
+
+    const logoutButton =
+        document.getElementById('logout-button');
+
+    const statusMessage =
+        document.getElementById('status-message');
+
+    const mediaGrid =
+        document.getElementById('media-grid');
+
+    const photoInput =
+        document.getElementById('photo-input');
+
+    const videoInput =
+        document.getElementById('video-input');
+
+    const photoUpload =
+        document.getElementById('photo-upload');
+
+    const videoUpload =
+        document.getElementById('video-upload');
+
+    const refreshButton =
+        document.getElementById('refresh-button');
+
+
+    /* EVENTS */
+
+    const eventForm =
+        document.getElementById('event-form');
+
+    const eventId =
+        document.getElementById('event-id');
+
+    const eventTitle =
+        document.getElementById('event-title');
+
+    const eventDate =
+        document.getElementById('event-date');
+
+    const eventTime =
+        document.getElementById('event-time');
+
+    const eventVenue =
+        document.getElementById('event-venue');
+
+    const eventLocation =
+        document.getElementById('event-location');
+
+    const eventTicketUrl =
+        document.getElementById('event-ticket-url');
+
+    const eventFlyerUrl = document.getElementById('event-flyer-url');
+    const eventFlyerFile = document.getElementById('event-flyer-file');
+    const flyerPreviewWrap = document.getElementById('flyer-preview-wrap');
+    const flyerPreview = document.getElementById('flyer-preview');
+    const removeFlyer = document.getElementById('remove-flyer');
+
+    const eventDescription =
+        document.getElementById('event-description');
+
+    const eventSaveButton =
+        document.getElementById('event-save-button');
+
+    const eventCancelButton =
+        document.getElementById('event-cancel-button');
+
+    const eventFormTitle =
+        document.getElementById('event-form-title');
+
+    const editingNotice =
+        document.getElementById('editing-notice');
+
+    const eventMessage =
+        document.getElementById('event-message');
+
+    const upcomingEvents =
+        document.getElementById('upcoming-events');
+
+    const pastEvents =
+        document.getElementById('past-events');
+
+
+    /* ============================================================
+       HELPERS
+       ============================================================ */
+
+    function showMessage(element, text, success = false) {
+        element.textContent = text;
+        element.style.display = 'block';
+
+        if (success) {
+            element.classList.add('success');
+        } else {
+            element.classList.remove('success');
+        }
+    }
+
+    function hideMessage(element) {
+        element.style.display = 'none';
+        element.classList.remove('success');
+    }
+
+    function escapeHtml(text) {
+        return String(text ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    function escapeJs(text) {
+        return String(text ?? '')
+            .replace(/\\/g, '\\\\')
+            .replace(/'/g, "\\'");
+    }
+
+    function safeUrl(url) {
+        if (!url) return '';
+
+        try {
+            const parsed = new URL(url);
+
+            if (
+                parsed.protocol === 'http:' ||
+                parsed.protocol === 'https:'
+            ) {
+                return parsed.href;
+            }
+        } catch (error) {}
+
+        return '';
+    }
+
+    function localTodayString() {
+        const now = new Date();
+
+        const year = now.getFullYear();
+
+        const month =
+            String(now.getMonth() + 1).padStart(2, '0');
+
+        const day =
+            String(now.getDate()).padStart(2, '0');
+
+        return `${year}-${month}-${day}`;
+    }
+
+    function formatEventDate(dateString) {
+        if (!dateString) return '';
+
+        const date =
+            new Date(dateString + 'T12:00:00');
+
+        return date.toLocaleDateString(
+            undefined,
+            {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            }
+        );
+    }
+
+    function formatEventTime(timeString) {
+        if (!timeString) return '';
+
+        const parts =
+            timeString.split(':');
+
+        let hour =
+            Number(parts[0]);
+
+        const minute =
+            parts[1] || '00';
+
+        const suffix =
+            hour >= 12 ? 'PM' : 'AM';
+
+        hour =
+            hour % 12 || 12;
+
+        return `${hour}:${minute} ${suffix}`;
+    }
+
+
+    /* ============================================================
+       AUTH
+       ============================================================ */
+
+    loginForm.addEventListener(
+        'submit',
+        async function(event) {
+
+            event.preventDefault();
+
+            hideMessage(loginMessage);
+
+            const email =
+                document.getElementById('email')
+                    .value
+                    .trim();
+
+            const password =
+                document.getElementById('password')
+                    .value;
+
+            const { error } =
+                await supabaseClient.auth
+                    .signInWithPassword({
+                        email,
+                        password
+                    });
+
+            if (error) {
+                showMessage(
+                    loginMessage,
+                    'LOGIN FAILED: ' + error.message
+                );
+
+                return;
+            }
+
+            showAdmin();
+        }
+    );
+
+
+    async function checkLogin() {
+        const { data } =
+            await supabaseClient.auth.getSession();
+
+        if (data.session) {
+            showAdmin();
+        }
+    }
+
+
+    function showAdmin() {
+        loginScreen.style.display = 'none';
+        adminScreen.style.display = 'block';
+
+        loadEvents();
+        loadMedia();
+    }
+
+
+    logoutButton.addEventListener(
+        'click',
+        async function() {
+
+            await supabaseClient.auth.signOut();
+
+            adminScreen.style.display = 'none';
+            loginScreen.style.display = 'flex';
+
+            document.getElementById('password').value = '';
+        }
+    );
+
+
+    /* ============================================================
+       EVENTS - ADD / UPDATE
+       ============================================================ */
+
+    eventForm.addEventListener(
+        'submit',
+        async function(event) {
+
+            event.preventDefault();
+
+            hideMessage(eventMessage);
+
+            const title =
+                eventTitle.value.trim();
+
+            const date =
+                eventDate.value;
+
+            if (!title || !date) {
+                showMessage(
+                    eventMessage,
+                    'EVENT NAME AND DATE ARE REQUIRED.'
+                );
+
+                return;
+            }
+
+            const ticketUrl =
+                eventTicketUrl.value.trim();
+
+            let flyerUrl = eventFlyerUrl.value.trim();
+            if (eventFlyerFile.files[0]) {
+                eventSaveButton.disabled = true;
+                eventSaveButton.textContent = 'UPLOADING FLYER...';
+                const file = eventFlyerFile.files[0];
+                const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+                const filePath = 'event-flyers/' + Date.now() + '_' + Math.random().toString(36).substring(2,8) + '_' + safeName;
+                const uploadResult = await supabaseClient.storage.from('media').upload(filePath, file, {cacheControl:'3600', upsert:false});
+                if (uploadResult.error) {
+                    eventSaveButton.disabled = false;
+                    eventSaveButton.textContent = eventId.value ? 'SAVE CHANGES' : 'ADD EVENT';
+                    showMessage(eventMessage, 'FLYER UPLOAD ERROR: ' + uploadResult.error.message);
+                    return;
+                }
+                flyerUrl = getPublicUrl(filePath);
+            }
+
+            if (
+                ticketUrl &&
+                !safeUrl(ticketUrl)
+            ) {
+                showMessage(
+                    eventMessage,
+                    'TICKET LINK MUST START WITH HTTP:// OR HTTPS://'
+                );
+
+                return;
+            }
+
+            if (
+                flyerUrl &&
+                !safeUrl(flyerUrl)
+            ) {
+                showMessage(
+                    eventMessage,
+                    'FLYER LINK MUST START WITH HTTP:// OR HTTPS://'
+                );
+
+                return;
+            }
+
+            const eventData = {
+                title: title,
+                event_date: date,
+                event_time:
+                    eventTime.value || null,
+                venue:
+                    eventVenue.value.trim() || null,
+                location:
+                    eventLocation.value.trim() || null,
+                ticket_url:
+                    ticketUrl || null,
+                flyer_url:
+                    flyerUrl || null,
+                description:
+                    eventDescription.value.trim() || null
+            };
+
+            eventSaveButton.disabled = true;
+
+            const editingId =
+                eventId.value;
+
+            let error;
+
+            if (editingId) {
+                const result =
+                    await supabaseClient
+                        .from('events')
+                        .update(eventData)
+                        .eq('id', editingId);
+
+                error = result.error;
+            } else {
+                const result =
+                    await supabaseClient
+                        .from('events')
+                        .insert([eventData]);
+
+                error = result.error;
+            }
+
+            eventSaveButton.disabled = false;
+
+            if (error) {
+                showMessage(
+                    eventMessage,
+                    'EVENT ERROR: ' + error.message
+                );
+
+                return;
+            }
+
+            showMessage(
+                eventMessage,
+                editingId
+                    ? 'EVENT UPDATED.'
+                    : 'EVENT ADDED.',
+                true
+            );
+
+            resetEventForm();
+
+            await loadEvents();
+        }
+    );
+
+
+    function resetEventForm() {
+        eventForm.reset();
+        eventId.value = '';
+        eventFlyerUrl.value = '';
+        flyerPreview.src = '';
+        flyerPreviewWrap.style.display = 'none';
+
+        eventFormTitle.textContent =
+            '🗓 ADD EVENT';
+
+        eventSaveButton.textContent =
+            'ADD EVENT';
+
+        eventCancelButton.style.display =
+            'none';
+
+        editingNotice.style.display =
+            'none';
+    }
+
+
+    eventFlyerFile.addEventListener('change', function() {
+        const file = eventFlyerFile.files[0];
+        if (!file) return;
+        flyerPreview.src = URL.createObjectURL(file);
+        flyerPreviewWrap.style.display = 'block';
+    });
+    removeFlyer.addEventListener('click', function() {
+        eventFlyerFile.value = '';
+        eventFlyerUrl.value = '';
+        flyerPreview.src = '';
+        flyerPreviewWrap.style.display = 'none';
+    });
+    eventCancelButton.addEventListener(
+        'click',
+        function() {
+            resetEventForm();
+            hideMessage(eventMessage);
+        }
+    );
+
+
+    /* ============================================================
+       EVENTS - LOAD
+       ============================================================ */
+
+    async function loadEvents() {
+
+        upcomingEvents.innerHTML =
+            '<div class="empty">LOADING EVENTS...</div>';
+
+        pastEvents.innerHTML =
+            '<div class="empty">LOADING PAST EVENTS...</div>';
+
+        const { data, error } =
+            await supabaseClient
+                .from('events')
+                .select('*')
+                .order(
+                    'event_date',
+                    { ascending: true }
+                );
+
+        if (error) {
+            upcomingEvents.innerHTML =
+                '<div class="empty">' +
+                'COULD NOT LOAD EVENTS.<br><br>' +
+                escapeHtml(error.message) +
+                '</div>';
+
+            pastEvents.innerHTML = '';
+
+            return;
+        }
+
+        const today =
+            localTodayString();
+
+        const upcoming =
+            (data || []).filter(
+                item =>
+                    item.event_date >= today
+            );
+
+        const past =
+            (data || [])
+                .filter(
+                    item =>
+                        item.event_date < today
+                )
+                .sort(
+                    (a, b) =>
+                        b.event_date.localeCompare(
+                            a.event_date
+                        )
+                );
+
+        renderEvents(
+            upcomingEvents,
+            upcoming,
+            false
+        );
+
+        renderEvents(
+            pastEvents,
+            past,
+            true
+        );
+    }
+
+
+    function renderEvents(
+        container,
+        events,
+        isPast
+    ) {
+
+        if (!events.length) {
+            container.innerHTML =
+                '<div class="empty">' +
+                (
+                    isPast
+                        ? 'NO PAST EVENTS YET.'
+                        : 'NO UPCOMING EVENTS YET.'
+                ) +
+                '</div>';
+
+            return;
+        }
+
+        container.innerHTML = '';
+
+        events.forEach(
+            function(item) {
+
+                const card =
+                    document.createElement('article');
+
+                card.className =
+                    'event-card' +
+                    (isPast ? ' past' : '');
+
+                const ticketUrl =
+                    safeUrl(item.ticket_url);
+
+                const flyerUrl =
+                    safeUrl(item.flyer_url);
+
+                const details = [];
+
+                if (item.event_time) {
+                    details.push(
+                        formatEventTime(
+                            item.event_time
+                        )
+                    );
+                }
+
+                if (item.venue) {
+                    details.push(
+                        escapeHtml(item.venue)
+                    );
+                }
+
+                if (item.location) {
+                    details.push(
+                        escapeHtml(item.location)
+                    );
+                }
+
+                card.innerHTML = `
+                    <div class="event-top">
+
+                        <div>
+                            <div class="event-date">
+                                ${escapeHtml(
+                                    formatEventDate(
+                                        item.event_date
+                                    )
+                                )}
+                            </div>
+
+                            <h3>
+                                ${escapeHtml(item.title)}
+                            </h3>
+                        </div>
+
+                    </div>
+
+                    ${
+                        details.length
+                        ? `
+                            <div class="event-details">
+                                ${details.join(' • ')}
+                            </div>
+                          `
+                        : ''
+                    }
+
+                    ${
+                        item.description
+                        ? `
+                            <div class="event-description">
+                                ${escapeHtml(
+                                    item.description
+                                )}
+                            </div>
+                          `
+                        : ''
+                    }
+
+                    ${
+                        flyerUrl
+                        ? `
+                            <img
+                                class="event-flyer"
+                                src="${escapeHtml(flyerUrl)}"
+                                alt="${escapeHtml(item.title)} flyer"
+                                loading="lazy">
+                          `
+                        : ''
+                    }
+
+                    <div class="event-actions">
+
+                        ${
+                            ticketUrl
+                            ? `
+                                <a
+                                    class="ticket-link"
+                                    href="${escapeHtml(ticketUrl)}"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    TICKET LINK ↗
+                                </a>
+                              `
+                            : ''
+                        }
+
+                        <button
+                            type="button"
+                            class="edit-event"
+                            data-event-id="${item.id}">
+                            EDIT
+                        </button>
+
+                        <button
+                            type="button"
+                            class="delete-event"
+                            data-event-id="${item.id}">
+                            DELETE
+                        </button>
+
+                    </div>
+                `;
+
+                container.appendChild(card);
+            }
+        );
+    }
+
+
+    /* ============================================================
+       EVENTS - EDIT / DELETE BUTTONS
+       ============================================================ */
+
+    document.addEventListener(
+        'click',
+        async function(event) {
+
+            const editButton =
+                event.target.closest('.edit-event');
+
+            const deleteButton =
+                event.target.closest('.delete-event');
+
+
+            if (editButton) {
+                await beginEditEvent(
+                    editButton.dataset.eventId
+                );
+            }
+
+
+            if (deleteButton) {
+                await deleteEvent(
+                    deleteButton.dataset.eventId
+                );
+            }
+        }
+    );
+
+
+    async function beginEditEvent(id) {
+
+        hideMessage(eventMessage);
+
+        const { data, error } =
+            await supabaseClient
+                .from('events')
+                .select('*')
+                .eq('id', id)
+                .single();
+
+        if (error) {
+            showMessage(
+                eventMessage,
+                'COULD NOT LOAD EVENT: ' +
+                error.message
+            );
+
+            return;
+        }
+
+        eventId.value =
+            data.id;
+
+        eventTitle.value =
+            data.title || '';
+
+        eventDate.value =
+            data.event_date || '';
+
+        eventTime.value =
+            data.event_time
+                ? data.event_time.substring(0, 5)
+                : '';
+
+        eventVenue.value =
+            data.venue || '';
+
+        eventLocation.value =
+            data.location || '';
+
+        eventTicketUrl.value =
+            data.ticket_url || '';
+
+        eventFlyerUrl.value = data.flyer_url || '';
+        if (data.flyer_url) {
+            flyerPreview.src = data.flyer_url;
+            flyerPreviewWrap.style.display = 'block';
+        } else {
+            flyerPreview.src = '';
+            flyerPreviewWrap.style.display = 'none';
+        }
+
+        eventDescription.value =
+            data.description || '';
+
+        eventFormTitle.textContent =
+            '✏️ EDIT EVENT';
+
+        eventSaveButton.textContent =
+            'SAVE CHANGES';
+
+        eventCancelButton.style.display =
+            'block';
+
+        editingNotice.style.display =
+            'block';
+
+        document
+            .getElementById('events-manager')
+            .scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+    }
+
+
+    async function deleteEvent(id) {
+
+        const confirmed =
+            confirm(
+                'Delete this event permanently?'
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        const { error } =
+            await supabaseClient
+                .from('events')
+                .delete()
+                .eq('id', id);
+
+        if (error) {
+            showMessage(
+                eventMessage,
+                'DELETE ERROR: ' +
+                error.message
+            );
+
+            return;
+        }
+
+        showMessage(
+            eventMessage,
+            'EVENT DELETED.',
+            true
+        );
+
+        if (
+            String(eventId.value) ===
+            String(id)
+        ) {
+            resetEventForm();
+        }
+
+        await loadEvents();
+    }
+
+
+    /* ============================================================
+       MEDIA - UPLOAD
+       ============================================================ */
+
+    async function uploadFiles(
+        files,
+        type,
+        progressContainer,
+        progressBar
+    ) {
+
+        if (!files || files.length === 0) {
+
+            showMessage(
+                statusMessage,
+                'SELECT SOME FILES FIRST.'
+            );
+
+            return;
+        }
+
+        hideMessage(statusMessage);
+
+        progressContainer.style.display =
+            'block';
+
+        progressBar.style.width =
+            '0%';
+
+        let completed = 0;
+
+        for (const file of files) {
+
+            try {
+
+                const safeName =
+                    file.name.replace(
+                        /[^a-zA-Z0-9._-]/g,
+                        '_'
+                    );
+
+                const fileName =
+                    Date.now() +
+                    '_' +
+                    Math.random()
+                        .toString(36)
+                        .substring(2, 8) +
+                    '_' +
+                    safeName;
+
+                const filePath =
+                    type + '/' + fileName;
+
+                const { error } =
+                    await supabaseClient
+                        .storage
+                        .from('media')
+                        .upload(
+                            filePath,
+                            file,
+                            {
+                                cacheControl: '3600',
+                                upsert: false
+                            }
+                        );
+
+                if (error) {
+                    throw error;
+                }
+
+                completed++;
+
+                progressBar.style.width =
+                    (
+                        completed /
+                        files.length *
+                        100
+                    ) + '%';
+
+            } catch (error) {
+
+                console.error(error);
+
+                showMessage(
+                    statusMessage,
+                    'UPLOAD ERROR: ' +
+                    error.message
+                );
+
+                progressContainer.style.display =
+                    'none';
+
+                return;
+            }
+        }
+
+        progressBar.style.width =
+            '100%';
+
+        showMessage(
+            statusMessage,
+            completed +
+            ' file(s) uploaded successfully.',
+            true
+        );
+
+        photoInput.value = '';
+        videoInput.value = '';
+
+        setTimeout(
+            function() {
+                progressContainer.style.display =
+                    'none';
+            },
+            1000
+        );
+
+        loadMedia();
+    }
+
+
+    photoUpload.addEventListener(
+        'click',
+        function() {
+
+            uploadFiles(
+                photoInput.files,
+                'photos',
+                document.getElementById(
+                    'photo-progress'
+                ),
+                document.getElementById(
+                    'photo-progress-bar'
+                )
+            );
+        }
+    );
+
+
+    videoUpload.addEventListener(
+        'click',
+        function() {
+
+            uploadFiles(
+                videoInput.files,
+                'videos',
+                document.getElementById(
+                    'video-progress'
+                ),
+                document.getElementById(
+                    'video-progress-bar'
+                )
+            );
+        }
+    );
+
+
+    /* ============================================================
+       MEDIA - PUBLIC URL
+       ============================================================ */
+
+    function getPublicUrl(path) {
+
+        const { data } =
+            supabaseClient
+                .storage
+                .from('media')
+                .getPublicUrl(path);
+
+        return data.publicUrl;
+    }
+
+
+    /* ============================================================
+       MEDIA - LOAD
+       ============================================================ */
+
+    async function loadMedia() {
+
+        mediaGrid.innerHTML =
+            '<div class="empty">LOADING...</div>';
+
+        let allFiles = [];
+
+        const {
+            data: photos,
+            error: photoError
+        } =
+            await supabaseClient
+                .storage
+                .from('media')
+                .list(
+                    'photos',
+                    {
+                        limit: 100,
+                        sortBy: {
+                            column: 'created_at',
+                            order: 'desc'
+                        }
+                    }
+                );
+
+        const {
+            data: videos,
+            error: videoError
+        } =
+            await supabaseClient
+                .storage
+                .from('media')
+                .list(
+                    'videos',
+                    {
+                        limit: 100,
+                        sortBy: {
+                            column: 'created_at',
+                            order: 'desc'
+                        }
+                    }
+                );
+
+        if (photoError || videoError) {
+
+            console.error(
+                photoError || videoError
+            );
+
+            mediaGrid.innerHTML =
+                '<div class="empty">' +
+                'Could not load media.' +
+                '</div>';
+
+            return;
+        }
+
+        if (photos) {
+
+            photos.forEach(
+                function(file) {
+
+                    if (!file.name) return;
+
+                    allFiles.push({
+                        name: file.name,
+                        path:
+                            'photos/' +
+                            file.name,
+                        type: 'photo',
+                        created:
+                            file.created_at
+                    });
+                }
+            );
+        }
+
+        if (videos) {
+
+            videos.forEach(
+                function(file) {
+
+                    if (!file.name) return;
+
+                    allFiles.push({
+                        name: file.name,
+                        path:
+                            'videos/' +
+                            file.name,
+                        type: 'video',
+                        created:
+                            file.created_at
+                    });
+                }
+            );
+        }
+
+        allFiles.sort(
+            function(a, b) {
+                return (
+                    new Date(b.created) -
+                    new Date(a.created)
+                );
+            }
+        );
+
+        if (allFiles.length === 0) {
+
+            mediaGrid.innerHTML =
+                '<div class="empty">' +
+                'NO MEDIA YET.<br><br>' +
+                'UPLOAD SOME CHAOS.' +
+                '</div>';
+
+            return;
+        }
+
+        mediaGrid.innerHTML = '';
+
+        allFiles.forEach(
+            function(file) {
+
+                const item =
+                    document.createElement('div');
+
+                item.className =
+                    'media-item';
+
+                const url =
+                    getPublicUrl(file.path);
+
+                if (file.type === 'photo') {
+
+                    item.innerHTML = `
+                        <img
+                            src="${escapeHtml(url)}"
+                            alt="${escapeHtml(file.name)}"
+                            loading="lazy">
+
+                        <div class="media-name">
+                            ${escapeHtml(file.name)}
+                        </div>
+
+                        <button
+                            class="delete-button"
+                            type="button"
+                            data-media-path="${escapeHtml(file.path)}">
+
+                            DELETE
+
+                        </button>
+                    `;
+
+                } else {
+
+                    item.innerHTML = `
+                        <video
+                            src="${escapeHtml(url)}"
+                            controls
+                            preload="metadata">
+                        </video>
+
+                        <div class="media-name">
+                            ${escapeHtml(file.name)}
+                        </div>
+
+                        <button
+                            class="delete-button"
+                            type="button"
+                            data-media-path="${escapeHtml(file.path)}">
+
+                            DELETE
+
+                        </button>
+                    `;
+                }
+
+                mediaGrid.appendChild(item);
+            }
+        );
+    }
+
+
+    /* ============================================================
+       MEDIA - DELETE
+       ============================================================ */
+
+    mediaGrid.addEventListener(
+        'click',
+        async function(event) {
+
+            const button =
+                event.target.closest(
+                    '[data-media-path]'
+                );
+
+            if (!button) {
+                return;
+            }
+
+            const path =
+                button.dataset.mediaPath;
+
+            const confirmed =
+                confirm(
+                    'Delete this file permanently?'
+                );
+
+            if (!confirmed) {
+                return;
+            }
+
+            const { error } =
+                await supabaseClient
+                    .storage
+                    .from('media')
+                    .remove([path]);
+
+            if (error) {
+
+                showMessage(
+                    statusMessage,
+                    'DELETE ERROR: ' +
+                    error.message
+                );
+
+                return;
+            }
+
+            showMessage(
+                statusMessage,
+                'FILE DELETED.',
+                true
+            );
+
+            loadMedia();
+        }
+    );
+
+
+    refreshButton.addEventListener(
+        'click',
+        function() {
+            loadMedia();
+            loadEvents();
+        }
+    );
+
+
+    /* ============================================================
+       START
+       ============================================================ */
+
+    checkLogin();
+
+</script>
+
+</body>
+</html>
